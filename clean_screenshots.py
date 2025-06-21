@@ -11,20 +11,13 @@ def remove_large_dimension_images(folder):
     for root, dirs, files in os.walk(folder):
         for file in files:
             if file.lower().endswith('.png'):
-                print(f"Checking file: {file}")  # Debug: show each png file
-
                 match = pattern.search(file)
                 if match:
                     x = int(match.group(1))
                     y = int(match.group(2))
-                    print(f"  Found dimensions: {x}x{y}")
-
                     if x > max_dim or y > max_dim:
                         file_path = os.path.join(root, file)
-                        print(f"  Removing file: {file_path}")
                         os.remove(file_path)
-                else:
-                    print("  No dimension pattern found in filename.")
 
 if __name__ == "__main__":
     if os.path.isdir(screenshots_folder):

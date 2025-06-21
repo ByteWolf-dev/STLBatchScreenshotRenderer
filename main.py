@@ -3,7 +3,6 @@ import os
 import math
 import mathutils
 
-# Setup paths relative to script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 stl_folder = os.path.join(script_dir, "STLFiles")
 output_folder = os.path.join(stl_folder, "screenshots")
@@ -56,21 +55,16 @@ def render_image(output_path):
     bpy.context.scene.render.resolution_y = 800
     bpy.ops.render.render(write_still=True)
 
-# Walk through all folders and subfolders
 for root, dirs, files in os.walk(stl_folder):
     for filename in files:
         if filename.lower().endswith(".stl"):
             stl_path = os.path.join(root, filename)
             print(f"Processing file: {stl_path}")
 
-            # Get relative path from STLFiles folder to the file's folder
             relative_dir = os.path.relpath(root, stl_folder)
-
-            # Prepare output directory keeping folder structure
             output_dir = os.path.join(output_folder, relative_dir)
             os.makedirs(output_dir, exist_ok=True)
 
-            # Output file path for screenshot
             output_file = os.path.join(output_dir, os.path.splitext(filename)[0] + ".png")
 
             clean_scene()
